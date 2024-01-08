@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+
+<table class="table table-hover">
+    <thead class="sticky-top bg-light">
+      <tr>
+        <th scope="col">Numero Digesto</th>
+        <th scope="col">Creador</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Subcategoria</th>
+        <th scope="col">Fecha creacion</th>
+        <th scope="col">Fecha Vigencia</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for digesto in digestos %}
+      <tr>
+        <th>{{ digesto.numeroDigesto }}</th>
+        <td>{{digesto.usuario}}</td>
+        <td>{{ digesto.categoria }}</td>
+        <td>{{digesto.subcategoria}}</td>
+        <td>{{digesto.fecha_creacion}}</td>
+        <td>{{digesto.fecha_vigencia}}</td>
+        <td>{{digesto.estado}}</td>
+        <td><div>
+            <a href="{% url 'digesto_detalle' digesto.id %}">
+                <i class="bi bi-eye"> </i></a>       
+       </div> 
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<body class="bg-body-tertiary">
+   
+    
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+     
+      <h1>Digesto </h1>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dui eros, efficitur quis rhoncus ac, ullamcorper ut leo. Vivamus egestas ipsum eu massa accumsan maximus</p>
+      </div>
+      <div class="row g-5">
+       <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Ultimos digestos agregados</span>
+            <span class="badge bg-primary rounded-pill">{{ digestos|length }}</span>
+          </h4>
+          <ul class="list-group mb-3">
+            {% for digesto in digestos %}
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">N° {{ digesto.numeroDigesto }}</h6>
+                <div><small class="text-body-secondary">Estado: {{ digesto.estado }}</small></div>
+                <div><small class="text-body-secondary">creado por: {{ digesto.usuario }}</small></div>
+              </div>
+              <span class="text-body-secondary">{{ digesto.fecha_creacion }}</span>
+            </li>
+            {% endfor %}
+            
+           
+          </ul>
+  
+        </div> 
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Formulario de carga</h4>
+          <form class="needs-validation" action="/createDigesto/" method="POST" enctype="multipart/form-data" >         
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6">
+              
+                    <label for="numeroDigesto" class="form-label">Nº de Ordenanza</label>
+                    <input type="text" class="form-control" name="numeroDigesto" id="numeroDigesto" required>
+                    <div class="invalid-feedback">
+                        Este campo es obligatorio.
+                    </div>
+               
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="estado" class="form-label">Estado de las ordenanzas</label>
+                <input type="text" class="form-control" name="estado" id="estado" required >
+                
+        
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="categoria" class="form-label">Categoria</label>
+                <select class="form-control" aria-label="Default select example" name="categoria" id="categoria" required>
+                    <option value="" selected disabled>seleccionar</option>
+                    {% for categoria in form.categoria.field.queryset %}
+                        <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                  <label for="subcategoria" class="form-label">Subcategoria</label>
+                  <select class="form-control" aria-label="Default select example"   name="subcategoria" id="subcategoria" >
+                    <option value="" selected disabled>seleccionar</option>
+                      {% for subcategoria in form.subcategoria.field.queryset %}
+                      <option value="{{ subcategoria.id }}" required>{{ subcategoria.nombre }}</option>
+                  {% endfor %}
+                    
+                    </select>
+                
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="palabrasClave" class="form-label">Palabras clave</label>
+                <input type="text" class="form-control" name="palabrasClave" id="palabrasClave" placeholder="ingrese palabras clave" >
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+  
+              <div class="col-12">
+                  <label for="fecha_vigencia">Fecha vigencia:</label>
+                  <input type="date" class="form-control" name="fecha_vigencia" id="fecha_vigencia"  placeholder="ingresar fecha de creacion del digesto" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="descripcion">Descripcion</label>
+                <textarea class="form-control" id="descripcion" rows="3" name="descripcion"></textarea>
+        
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+  
+  
+              <div class="col-6">
+                <label for="archivo">archivo</label>
+                <input type="file" class="form-control-file"  name="archivo" id="archivo" required>
+                  <div class="invalid-feedback">
+                    Por favor adjuntar archivo
+                  </div>
+                </div>
+  
+            
+            </div>
+  
+            <hr class="my-4">
+  
+             <button  class="w-100 btn btn-primary btn-lg" type="submit">
+  
+    Guardar Digesto
+  </button>
+          </form>
+        </div>
+      </div>
+    </main>
+   
+  
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+      <p class="mb-1">&copy; 2017–2024 Municipalidad Picun Leufu</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+      </ul>
+    </footer>
+  </div>
+
+{% endblock %}

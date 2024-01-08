@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% block content %}
+<div class="col-md-7 col-lg-8 mx-auto">
+    <h4 class="mb-3">Formulario de carga</h4>
+    <form method="POST"  enctype="multipart/form-data">         
+      {% csrf_token %}
+      <div class="row g-3">
+          <div class="col-sm-6">
+        
+              <label for="numeroDigesto" class="form-label">Nº de Ordenanza</label>
+              <input type="text" class="form-control" name="numeroDigesto" id="numeroDigesto" value="{{digesto.numeroDigesto}}" required>
+              <div class="invalid-feedback">
+                  Este campo es obligatorio.
+              </div>
+         
+          </div>
+
+           <div class="col-sm-6">
+          <label for="estado" class="form-label">Estado de las ordenanzas</label>
+          <input type="text" class="form-control" name="estado" id="estado" value="{{digesto.estado}}" required >
+          
+  
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+          </div>
+           <div class="col-sm-6">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select class="form-control" aria-label="Default select example" name="categoria"  id="categoria" required>
+              <option value="{{digesto.categoria}}" selected disabled>seleccionar</option>
+              {% for categoria in form.categoria.field.queryset %}
+                  <option value="{{ categoria.id }} "{% if digesto.categoria.id == categoria.id %}selected{% endif %}>{{ categoria.nombre }}</option>
+              {% endfor %}
+          </select>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="subcategoria" class="form-label">Subcategoria</label>
+            <select class="form-control" aria-label="Default select example" name="subcategoria" id="subcategoria">
+                <option value="" selected disabled>seleccionar</option>
+                {% for subcategoria in form.subcategoria.field.queryset %}
+                    <option value="{{ subcategoria.id }}" {% if digesto.subcategoria.id == subcategoria.id %}selected{% endif %}>{{ subcategoria.nombre }}</option>
+                {% endfor %}
+            </select>
+            <div class="invalid-feedback">
+                Valid last name is required.
+            </div>
+          </div>
+
+          <div class="col-12">
+          <label for="palabrasClave" class="form-label">Palabras clave</label>
+          <input type="text" class="form-control" name="palabrasClave" id="palabrasClave" value={{digesto.palabrasClave}} placeholder="ingrese palabras clave" >
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+          </div>
+
+          <div class="col-12">
+            <label for="fecha_vigencia">Fecha vigencia:</label>
+            <input type="date" class="form-control" name="fecha_vigencia" id="fecha_vigencia" value="{{digesto.fecha_vigencia |date:'Y-m-d' }}" required>
+          <div class="invalid-feedback">
+            Please enter a valid email address for shipping updates.
+          </div>
+          </div>
+
+          <div class="col-12">
+          <label for="descripcion">Descripcion</label>
+          <textarea class="form-control" id="descripcion" rows="3"  name="descripcion">{{digesto.descripcion}}</textarea>
+  
+          <div class="invalid-feedback">
+            Please enter a valid email address for shipping updates.
+          </div>
+          </div>
+
+
+          <div class="col-6">
+            <label for="archivo">Archivo actual:</label>
+            {% if digesto.archivo %}
+                <a href="{{ digesto.archivo.url }}" target="_blank">{{ digesto.archivo.name }}</a>
+            {% else %}
+                No hay archivo adjunto.
+            {% endif %}
+            <br>
+            <label for="archivo">Subir nuevo archivo:</label>
+            <input type="file" class="form-control-file" name="archivo" id="archivo">
+            <div class="invalid-feedback">
+                Por favor, adjuntar archivo.
+            </div>
+          </div>
+
+      
+      </div>
+
+
+      <button class="w-100 btn btn-primary btn-lg" type="submit">
+        Actualizar Digesto
+      </button>
+
+    </form>
+    <form action="{% url 'delete_digesto' digesto.id %}" method="POST">
+        {% csrf_token %}
+        <button class="w-100 btn btn-danger btn-lg" type="submit">
+            Eliminar Digesto
+        </button>
+      </form>
+  
+    
+</div>
+
+
+
+
+{% endblock %}
